@@ -112,6 +112,8 @@ td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
   border-bottom:1px solid var(--rule-strong);
 }
 .group-title h3{font-size:16px; font-weight:700; letter-spacing:.02em}
+.group-note{margin:11px 0 0; font-size:13.5px; color:var(--muted); max-width:62ch; line-height:1.75}
+.group-tag.neutral{color:var(--muted); background:var(--surface-2)}
 .group-tag{
   font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.1em;
   color:var(--flag); background:var(--flag-soft); padding:2px 8px; border-radius:2px;
@@ -167,15 +169,16 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
     <li>対象　<b>nandemo-kaitori1.com</b></li>
     <li>目標　<b>モバイル 90 点以上</b></li>
     <li>サーバー　<b>エックスサーバー（共用）</b></li>
+    <li>構成　<b>静的 HTML（確定）</b></li>
     <li>作成日　<b>2026-09-01</b></li>
   </ul>
 </header>
 
 <div class="callout">
-  <h3>着手前に必ず確認したい点</h3>
-  <p>調査の結果、<b>トップページは WordPress ではなく、直接作られた HTML ファイル</b>である可能性が高いことがわかりました（URL が <span class="mono">/company.html</span> 形式であること、WordPress は <span class="mono">/wp/</span> 配下のブログにのみ設置されていることが根拠です）。</p>
-  <p>もしこの通りであれば、お持ちの高速化プラグイン <b>「WP Rocket」はトップページには効果がありません</b>。WP Rocket は WordPress が生成するページにのみ働くためです。この場合は下記 A〜E の方法で対応します。</p>
-  <p>確認は数分で完了します。<b>結果によって対応範囲と作業量が変わる</b>ため、最初の作業として実施させてください。</p>
+  <h3>サイト構成の確認結果</h3>
+  <p>ご確認の結果、<b>トップページは WordPress ではなく、直接作られた HTML ファイル</b>であることが確定しました。</p>
+  <p>このため、お持ちの高速化プラグイン <b>「WP Rocket」はトップページには効果がありません。</b>WP Rocket は WordPress が生成するページにのみ働く仕組みのためです。<b>トップページの点数は、下記 A〜E の方法で改善します。</b></p>
+  <p>なお WP Rocket は <span class="mono">/wp/</span> 配下のブログ記事には有効です（下記 F）。ライセンスが無駄になるわけではありませんが、<b>今回の目標である「トップページ 90 点」には関与しません。</b></p>
 </div>
 
 <section>
@@ -213,8 +216,8 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
     <div class="group-title"><h3>0 ── 事前確認</h3><span class="group-tag">必須</span></div>
     <div class="m">
       <div class="m-code">0-1</div>
-      <div><div class="m-name">サイト構成の確認</div><p class="m-desc">トップページが WordPress かどうかを確認します。WP Rocket が使えるかどうかがここで決まります。</p></div>
-      <div class="m-meta"><span class="chip hi">効果 前提</span><span class="chip">工数 小</span></div>
+      <div><div class="m-name">サイト構成の確認</div><p class="m-desc">トップページは静的 HTML であることを確認済みです。WP Rocket の対象外と確定しました。</p></div>
+      <div class="m-meta"><span class="chip mid">完了</span></div>
     </div>
     <div class="m">
       <div class="m-code">0-2</div>
@@ -324,10 +327,11 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
   </div>
 
   <div class="group">
-    <div class="group-title"><h3>F ── WordPress 部分（/wp/ のブログ）</h3></div>
+    <div class="group-title"><h3>F ── WordPress 部分（/wp/ のブログ）</h3><span class="group-tag neutral">トップページ対象外</span></div>
+    <p class="group-note">この F の項目は <span class="mono">/wp/</span> 配下のブログ記事にのみ効きます。<b>今回の目標である「トップページ 90 点」には影響しません。</b>ブログを継続される場合の任意項目としてご検討ください。</p>
     <div class="m">
       <div class="m-code">F-1</div>
-      <div><div class="m-name">WP Rocket の設定最適化</div><p class="m-desc">お持ちのプラグインを設定します。キャッシュ、未使用 CSS の削除、JavaScript の遅延実行などを 1 項目ずつ検証しながら有効化します。</p></div>
+      <div><div class="m-name">WP Rocket の設定最適化</div><p class="m-desc">お持ちのプラグインを、ブログ記事に対して設定します。キャッシュ、未使用 CSS の削除、JavaScript の遅延実行などを 1 項目ずつ検証しながら有効化します。</p></div>
       <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
     </div>
     <div class="m">
@@ -371,7 +375,7 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
   <div class="sec-head"><span class="sec-key mono">3</span><h2>進め方</h2></div>
   <p class="sec-note">効果と安全性の高いものから順に着手し、1 段階ごとに計測して効果を確認します。</p>
   <ol class="steps">
-    <li><b>構成確認と現状計測（0-1 / 0-2）</b>　── これを飛ばすと、以降の作業が空振りになる可能性があります。</li>
+    <li><b>現状計測（0-2）</b>　── 構成確認（0-1）は完了済みです。作業前の点数を記録し、効果測定の基準にします。</li>
     <li><b>サーバー設定（A-1〜A-4）</b>　── サイトの改修を伴わず、リスクが低く即効性があります。</li>
     <li><b>画像の最適化（B-1〜B-5）</b>　── 最も効果が大きい工程です。</li>
     <li><b>フォントの見直し（C-1 / C-2）</b>　── 見た目に関わるため、事前にご確認いただきます。</li>
@@ -400,7 +404,7 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
     <table>
       <thead><tr><th>工程</th><th>内容</th><th>想定工数</th></tr></thead>
       <tbody>
-        <tr><td class="num">0</td><td>構成確認・現状計測</td><td class="num">1 時間</td></tr>
+        <tr><td class="num">0</td><td>現状計測（構成確認は完了）</td><td class="num">1 時間</td></tr>
         <tr><td class="num">A</td><td>サーバー設定</td><td class="num">1 時間</td></tr>
         <tr><td class="num">B</td><td>画像の最適化</td><td class="num">4 〜 8 時間</td></tr>
         <tr><td class="num">C</td><td>フォントの見直し</td><td class="num">1 〜 2 時間</td></tr>
@@ -411,11 +415,11 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
       </tbody>
     </table>
   </div>
-  <p class="legend" style="margin-top:12px">※ サイト構成の確認結果（0-1）により、対象範囲と工数が変わる場合があります。</p>
+  <p class="legend" style="margin-top:12px">※ 上記はトップページ（静的 HTML）の改善に必要な工数です。F の WordPress 項目は含みません。</p>
 </section>
 
 <footer>
-  本資料は、公開情報およびサーバー情報の調査にもとづく想定を含みます。実測値による確定版は、現状計測（0-2）の完了後にご提出します。
+  サイト構成は確定済みです。効果・工数の数値は現時点での想定を含みます。実測値を反映した確定版は、現状計測（0-2）の完了後にご提出します。
 </footer>
 
 </div>
