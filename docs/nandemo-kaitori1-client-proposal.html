@@ -1,0 +1,421 @@
+<title>NANDEMO KAITORI 速度改善プラン</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F1F3F1; --surface:#FFFFFF; --surface-2:#E9EDEB;
+  --ink:#16262B; --body:#2E3E41; --muted:#5E6E6E;
+  --accent:#0B6E5F; --accent-soft:#DCEAE5; --accent-ink:#08574A;
+  --flag:#B4441C; --flag-soft:#F5E2D9;
+  --rule:#D5DCDA; --rule-strong:#B9C4C1;
+  --shadow:0 1px 2px rgba(22,38,43,.05);
+  --on-accent:#FFFFFF; --bar-fg-dark:#0F1614;
+  --bar1:#065146; --bar2:#0B6E5F; --bar3:#14806C; --bar4:#6FBEAC; --bar5:#A8D5C8;
+  --bar-fg-light:#FFFFFF;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1614; --surface:#17201E; --surface-2:#1E2926;
+    --ink:#E7ECE9; --body:#C3CECB; --muted:#8A9997;
+    --accent:#5CBBA4; --accent-soft:#1B322D; --accent-ink:#8AD4C0;
+    --flag:#E88B62; --flag-soft:#33211A;
+    --rule:#2A3634; --rule-strong:#3B4A47;
+    --shadow:0 1px 2px rgba(0,0,0,.3);
+    --on-accent:#0F1614; --bar-fg-dark:#0F1614;
+    --bar1:#14544A; --bar2:#1B6B5D; --bar3:#24836F; --bar4:#5FB5A1; --bar5:#8ACFBD;
+    --bar-fg-light:#FFFFFF;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1614; --surface:#17201E; --surface-2:#1E2926;
+  --ink:#E7ECE9; --body:#C3CECB; --muted:#8A9997;
+  --accent:#5CBBA4; --accent-soft:#1B322D; --accent-ink:#8AD4C0;
+  --flag:#E88B62; --flag-soft:#33211A;
+  --rule:#2A3634; --rule-strong:#3B4A47;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+  --on-accent:#0F1614; --bar-fg-dark:#0F1614;
+  --bar1:#14544A; --bar2:#1B6B5D; --bar3:#24836F; --bar4:#5FB5A1; --bar5:#8ACFBD;
+  --bar-fg-light:#FFFFFF;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--body);
+  font-family:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  font-size:15px; line-height:1.85; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px; margin:0 auto; padding:0 24px 88px}
+h1,h2,h3{color:var(--ink); text-wrap:balance; margin:0}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace; font-variant-numeric:tabular-nums}
+
+/* ---- header ---- */
+.head{padding:56px 0 36px; border-bottom:2px solid var(--ink)}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--accent-ink); margin:0 0 14px
+}
+h1{font-family:"Zen Old Mincho",serif; font-weight:700; font-size:clamp(30px,5.4vw,44px); line-height:1.3; letter-spacing:.01em}
+.sub{margin:14px 0 0; font-size:16px; color:var(--muted); max-width:60ch}
+.facts{display:flex; flex-wrap:wrap; gap:8px 28px; margin:26px 0 0; padding:0; list-style:none; font-size:13px}
+.facts li{color:var(--muted)}
+.facts b{color:var(--ink); font-weight:500}
+
+/* ---- generic section ---- */
+section{margin:56px 0 0}
+.sec-head{display:flex; align-items:baseline; gap:14px; margin:0 0 6px}
+.sec-key{
+  font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+  color:var(--surface); background:var(--accent);
+  width:26px; height:26px; display:grid; place-items:center; flex:none; border-radius:3px;
+}
+h2{font-family:"Zen Old Mincho",serif; font-weight:700; font-size:22px; line-height:1.45}
+.sec-note{margin:6px 0 18px; font-size:14px; color:var(--muted); max-width:62ch}
+
+/* ---- callout ---- */
+.callout{
+  background:var(--surface); border:1px solid var(--rule); border-top:3px solid var(--flag);
+  padding:26px 28px; margin:34px 0 0; box-shadow:var(--shadow);
+}
+.callout h3{font-family:"Zen Old Mincho",serif; font-size:19px; margin:0 0 10px; color:var(--flag)}
+.callout p{margin:0 0 12px; font-size:14.5px; max-width:64ch}
+.callout p:last-child{margin-bottom:0}
+
+/* ---- weight bar ---- */
+.bar{display:flex; height:38px; margin:22px 0 12px; border-radius:3px; overflow:hidden; border:1px solid var(--rule)}
+.bar span{
+  display:grid; place-items:center; font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px; font-weight:600; color:var(--bar-fg-light); letter-spacing:.04em;
+}
+.bar .w30{flex:30; background:var(--bar1)}
+.bar .w25a{flex:25; background:var(--bar2)}
+.bar .w25b{flex:25; background:var(--bar3)}
+.bar .w10a{flex:10; background:var(--bar4)}
+.bar .w10b{flex:10; background:var(--bar5)}
+.bar .w10a,.bar .w10b{color:var(--bar-fg-dark)}
+.legend{font-size:13px; color:var(--muted); margin:0}
+
+/* ---- table ---- */
+.tw{overflow-x:auto; margin:20px 0 0; border:1px solid var(--rule); background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:460px; font-size:14px}
+th,td{text-align:left; padding:11px 16px; border-bottom:1px solid var(--rule)}
+thead th{
+  background:var(--surface-2); color:var(--ink); font-weight:500; font-size:12px;
+  letter-spacing:.06em; white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink)}
+
+/* ---- measure rows ---- */
+.group{margin:30px 0 0}
+.group-title{
+  display:flex; align-items:center; gap:10px; padding:0 0 8px;
+  border-bottom:1px solid var(--rule-strong);
+}
+.group-title h3{font-size:16px; font-weight:700; letter-spacing:.02em}
+.group-tag{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; letter-spacing:.1em;
+  color:var(--flag); background:var(--flag-soft); padding:2px 8px; border-radius:2px;
+}
+.m{
+  display:grid; grid-template-columns:52px 1fr 168px; gap:0 18px;
+  padding:15px 0; border-bottom:1px solid var(--rule); align-items:start;
+}
+.m-code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:600; color:var(--accent-ink); padding-top:2px}
+.m-name{color:var(--ink); font-weight:500; font-size:15px; line-height:1.6}
+.m-desc{margin:4px 0 0; font-size:13.5px; color:var(--muted); line-height:1.75; max-width:56ch}
+.m-meta{display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-end; padding-top:2px}
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:500; letter-spacing:.04em;
+  padding:2px 8px; border-radius:2px; white-space:nowrap; border:1px solid var(--rule-strong); color:var(--muted);
+}
+.chip.hi{background:var(--accent); border-color:var(--accent); color:var(--on-accent)}
+.chip.mid{background:var(--accent-soft); border-color:var(--accent-soft); color:var(--accent-ink)}
+
+/* ---- steps ---- */
+ol.steps{counter-reset:s; list-style:none; margin:20px 0 0; padding:0}
+ol.steps li{
+  counter-increment:s; position:relative; padding:0 0 20px 46px; font-size:14.5px;
+}
+ol.steps li::before{
+  content:counter(s,decimal-leading-zero); position:absolute; left:0; top:1px;
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600;
+  color:var(--accent-ink); border:1px solid var(--rule-strong); border-radius:3px;
+  width:30px; height:24px; display:grid; place-items:center;
+}
+ol.steps b{color:var(--ink); font-weight:500}
+
+ul.plain{margin:18px 0 0; padding:0 0 0 20px}
+ul.plain li{margin:0 0 12px; font-size:14.5px; max-width:64ch}
+ul.plain b{color:var(--ink); font-weight:500}
+
+footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font-size:13px; color:var(--muted)}
+
+@media (max-width:680px){
+  .m{grid-template-columns:46px 1fr; gap:0 12px}
+  .m-meta{grid-column:2; justify-content:flex-start; margin-top:9px}
+  .head{padding:40px 0 28px}
+}
+</style>
+
+<div class="wrap">
+
+<header class="head">
+  <p class="eyebrow">Web Performance Assessment</p>
+  <h1>表示速度改善　対応方法一覧</h1>
+  <p class="sub">nandemo-kaitori1.com のページ表示速度を Google PageSpeed Insights で 90 点以上にするための、対応方法とその効果・作業量の整理です。</p>
+  <ul class="facts">
+    <li>対象　<b>nandemo-kaitori1.com</b></li>
+    <li>目標　<b>モバイル 90 点以上</b></li>
+    <li>サーバー　<b>エックスサーバー（共用）</b></li>
+    <li>作成日　<b>2026-09-01</b></li>
+  </ul>
+</header>
+
+<div class="callout">
+  <h3>着手前に必ず確認したい点</h3>
+  <p>調査の結果、<b>トップページは WordPress ではなく、直接作られた HTML ファイル</b>である可能性が高いことがわかりました（URL が <span class="mono">/company.html</span> 形式であること、WordPress は <span class="mono">/wp/</span> 配下のブログにのみ設置されていることが根拠です）。</p>
+  <p>もしこの通りであれば、お持ちの高速化プラグイン <b>「WP Rocket」はトップページには効果がありません</b>。WP Rocket は WordPress が生成するページにのみ働くためです。この場合は下記 A〜E の方法で対応します。</p>
+  <p>確認は数分で完了します。<b>結果によって対応範囲と作業量が変わる</b>ため、最初の作業として実施させてください。</p>
+</div>
+
+<section>
+  <div class="sec-head"><span class="sec-key mono">1</span><h2>90 点の内訳</h2></div>
+  <p class="sec-note">PageSpeed のスコアは 5 つの指標の加重平均です。配点は以下の通りで、<b>「表示の速さ」だけでなく「操作できるまでの待ち時間」と「画面のガタつき」で 55% を占めます</b>。画像を軽くするだけでは 90 点には届きません。</p>
+
+  <div class="bar" role="img" aria-label="配点の内訳：操作可能までの待ち時間30パーセント、主要コンテンツの表示25パーセント、画面のガタつき25パーセント、最初の描画10パーセント、体感速度10パーセント">
+    <span class="w30">TBT 30%</span>
+    <span class="w25a">LCP 25%</span>
+    <span class="w25b">CLS 25%</span>
+    <span class="w10a">FCP 10</span>
+    <span class="w10b">SI 10</span>
+  </div>
+  <p class="legend">※ スマートフォン計測は低速回線・低速CPUを想定した厳しい条件で行われます。</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>指標</th><th>意味</th><th>合格ライン</th></tr></thead>
+      <tbody>
+        <tr><td class="num">TBT</td><td>ページが操作できるようになるまでの待ち時間</td><td class="num">200ms 以下</td></tr>
+        <tr><td class="num">LCP</td><td>メインの画像・見出しが表示されるまでの時間</td><td class="num">2.5 秒以下</td></tr>
+        <tr><td class="num">CLS</td><td>読み込み中に画面がガタつく量</td><td class="num">0.1 以下</td></tr>
+        <tr><td class="num">FCP</td><td>最初に何かが表示されるまでの時間</td><td class="num">1.8 秒以下</td></tr>
+        <tr><td class="num">SI</td><td>全体が表示され終わるまでの体感速度</td><td class="num">3.4 秒以下</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-key mono">2</span><h2>対応方法一覧</h2></div>
+  <p class="sec-note">効果・工数は現時点での想定です（実測前のため）。着手前の計測結果によって前後する場合があります。</p>
+
+  <div class="group">
+    <div class="group-title"><h3>0 ── 事前確認</h3><span class="group-tag">必須</span></div>
+    <div class="m">
+      <div class="m-code">0-1</div>
+      <div><div class="m-name">サイト構成の確認</div><p class="m-desc">トップページが WordPress かどうかを確認します。WP Rocket が使えるかどうかがここで決まります。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 前提</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">0-2</div>
+      <div><div class="m-name">現状スコアの計測（基準値の記録）</div><p class="m-desc">作業前の点数と各指標を記録します。これがないと、どの作業が何点効いたかを判断できません。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 前提</span><span class="chip">工数 小</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title"><h3>A ── サーバー設定（サイトの改修なし）</h3></div>
+    <div class="m">
+      <div class="m-code">A-1</div>
+      <div><div class="m-name">Xアクセラレータ Ver.2 を有効化</div><p class="m-desc">エックスサーバーの標準機能。ファイル配信とプログラム処理を高速化します。管理画面の操作のみ。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">A-2</div>
+      <div><div class="m-name">ブラウザキャッシュ設定を有効化</div><p class="m-desc">一度見た画像などを訪問者の端末に保存させ、2 回目以降の表示を速くします。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">A-3</div>
+      <div><div class="m-name">XPageSpeed（ファイル圧縮・WebP変換）を有効化</div><p class="m-desc">データを圧縮して転送量を減らします。<b>ただし「CSS/JavaScript の遅延読み込み」機能は表示崩れの報告が多いため、あえて使いません。</b></p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span><span class="chip">要検証</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">A-4</div>
+      <div><div class="m-name">サーバー設定ファイルで圧縮・保存期間を明示</div><p class="m-desc">管理画面の設定に加えて、設定ファイル側でも圧縮方式とキャッシュ期間を指定し、確実に効かせます。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title"><h3>B ── 画像の最適化</h3><span class="group-tag">最優先</span></div>
+    <div class="m">
+      <div class="m-code">B-1</div>
+      <div><div class="m-name">画像を実際の表示サイズまで縮小</div><p class="m-desc">買取サイトは商品・実績写真が多く、ここが最大の負荷になりがちです。スマホ幅の枠に大きすぎる写真が入っていないか点検し、適正サイズに作り直します。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 中</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">B-2</div>
+      <div><div class="m-name">画像を WebP 形式に変換</div><p class="m-desc">見た目を保ったままファイル容量を 25〜35% 程度削減できる新しい画像形式に変換します。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 中</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">B-3</div>
+      <div><div class="m-name">最初に見える画像を優先的に読み込む</div><p class="m-desc">一番上のメイン画像に優先指定を付け、真っ先に読み込ませます。LCP に直結します。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">B-4</div>
+      <div><div class="m-name">画面外の画像は後から読み込む（遅延読み込み）</div><p class="m-desc">スクロールして初めて見える画像は、そこまで読み込みを待たせます。初期表示が大幅に軽くなります。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">B-5</div>
+      <div><div class="m-name">全画像に縦横サイズを指定</div><p class="m-desc">画像の表示枠をあらかじめ確保し、読み込み中に文字がずれる現象を防ぎます。配点 25% の CLS に直接効きます。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 中</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title"><h3>C ── 文字・フォント</h3></div>
+    <div class="m">
+      <div class="m-code">C-1</div>
+      <div><div class="m-name">日本語 Web フォントを端末標準フォントに変更</div><p class="m-desc">日本語の Web フォントは 1 種類で数 MB になることがあり、単体で致命傷になり得ます。端末に元から入っている書体に変えると転送量はゼロになります。<b>文字の見た目の印象は変わります。</b></p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 小</span><span class="chip">要相談</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">C-2</div>
+      <div><div class="m-name">アイコン用フォントを画像（SVG）に置き換え</div><p class="m-desc">数個のアイコンのために大きなフォント一式を読み込んでいる場合、見た目そのままで数百 KB 削減できます。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 中</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title"><h3>D ── プログラム（JavaScript）の軽量化</h3><span class="group-tag">配点最大</span></div>
+    <div class="m">
+      <div class="m-code">D-1</div>
+      <div><div class="m-name">スクリプトの読み込みを後回しにする</div><p class="m-desc">ページの表示をブロックしていた処理を、表示後に回します。配点 30% の TBT に効きます。</p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">D-2</div>
+      <div><div class="m-name">アクセス解析・広告タグを操作後に実行</div><p class="m-desc">解析タグや広告タグを、訪問者が画面を触るまで待たせます。<b>計測される数値がわずかに減る可能性があります（要ご判断）。</b></p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 小</span><span class="chip">要相談</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">D-3</div>
+      <div><div class="m-name">スライダー等のプラグインを軽量化・見直し</div><p class="m-desc">トップのスライドショーなどが重い処理の主因であることが多く、軽い実装に置き換えます。<b>動きの仕様が変わる場合があります。</b></p></div>
+      <div class="m-meta"><span class="chip hi">効果 大</span><span class="chip">工数 大</span><span class="chip">要相談</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title"><h3>E ── デザイン指定（CSS）の軽量化</h3></div>
+    <div class="m">
+      <div class="m-code">E-1</div>
+      <div><div class="m-name">最初の表示に必要な分だけ先に読み込む</div><p class="m-desc">画面上部の表示に必要な指定だけを先に読み込み、残りを後回しにします。表示開始が早くなります。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 大</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">E-2</div>
+      <div><div class="m-name">使っていないデザイン指定を削除</div><p class="m-desc">既製テンプレート由来の未使用部分を整理します。実際に使われているのは全体の 1 割程度ということも珍しくありません。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 中</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title"><h3>F ── WordPress 部分（/wp/ のブログ）</h3></div>
+    <div class="m">
+      <div class="m-code">F-1</div>
+      <div><div class="m-name">WP Rocket の設定最適化</div><p class="m-desc">お持ちのプラグインを設定します。キャッシュ、未使用 CSS の削除、JavaScript の遅延実行などを 1 項目ずつ検証しながら有効化します。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">F-2</div>
+      <div><div class="m-name">画像圧縮プラグインの導入</div><p class="m-desc"><b>WP Rocket には画像そのものを圧縮する機能はありません。</b>別途、圧縮用のプラグインを組み合わせる必要があります。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">F-3</div>
+      <div><div class="m-name">不要プラグインの整理</div><p class="m-desc">使っていないプラグインが全ページに独自のファイルを読み込ませている場合があり、停止するだけで軽くなります。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">F-4</div>
+      <div><div class="m-name">サーバー側キャッシュとの競合解消</div><p class="m-desc">エックスサーバーの「サーバーキャッシュ設定」と WP Rocket は機能が重複し、<b>両方 ON にすると更新が反映されない不具合が起きます。</b>片方を必ず無効化します。</p></div>
+      <div class="m-meta"><span class="chip">効果 —</span><span class="chip">工数 小</span><span class="chip">必須</span></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title"><h3>G ── 追加でご検討いただきたい項目</h3><span class="group-tag">任意</span></div>
+    <div class="m">
+      <div class="m-code">G-1</div>
+      <div><div class="m-name">CDN（配信高速化サービス）の導入</div><p class="m-desc">現在 CDN は未導入です。福岡中心の集客であれば必須ではありませんが、導入すれば画像配信と応答速度を底上げできます。</p></div>
+      <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 中</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">G-2</div>
+      <div><div class="m-name">更新の止まっている WordPress の扱い</div><p class="m-desc">/wp/ のブログは 2021 年以降ほぼ更新されていないようです。放置された WordPress は<b>セキュリティ上のリスク</b>になります。継続・停止のご判断をお願いします。</p></div>
+      <div class="m-meta"><span class="chip">速度対象外</span></div>
+    </div>
+    <div class="m">
+      <div class="m-code">G-3</div>
+      <div><div class="m-name">よくある質問ページの URL 変更</div><p class="m-desc"><span class="mono">/q&amp;a.html</span> は URL に記号「&amp;」を含み、共有・計測・検索エンジンで不利になります。改修のついでの変更を推奨します。</p></div>
+      <div class="m-meta"><span class="chip">速度対象外</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-key mono">3</span><h2>進め方</h2></div>
+  <p class="sec-note">効果と安全性の高いものから順に着手し、1 段階ごとに計測して効果を確認します。</p>
+  <ol class="steps">
+    <li><b>構成確認と現状計測（0-1 / 0-2）</b>　── これを飛ばすと、以降の作業が空振りになる可能性があります。</li>
+    <li><b>サーバー設定（A-1〜A-4）</b>　── サイトの改修を伴わず、リスクが低く即効性があります。</li>
+    <li><b>画像の最適化（B-1〜B-5）</b>　── 最も効果が大きい工程です。</li>
+    <li><b>フォントの見直し（C-1 / C-2）</b>　── 見た目に関わるため、事前にご確認いただきます。</li>
+    <li><b>JavaScript の軽量化（D-1〜D-3）</b>　── 配点最大の TBT を改善します。</li>
+    <li><b>CSS の軽量化（E-1 / E-2）</b>　── 90 点到達に向けた仕上げです。</li>
+    <li><b>動作確認と再計測</b>　── 電話・LINE・フォームの導線を実機で確認します。</li>
+  </ol>
+  <p class="legend">2〜5 の段階でモバイル 80 点前後、6 まで完了で 90 点以上が現実的なラインです。</p>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-key mono">4</span><h2>事前にご了承いただきたい点</h2></div>
+  <ul class="plain">
+    <li><b>点数は計測ごとに ±5 点程度変動します。</b>1 回の結果では判断せず、5 回計測した中央値で達成を判定します。</li>
+    <li><b>アクセス解析の数値がわずかに減る可能性があります。</b>D-2 を実施した場合のトレードオフです。実施の可否はご判断ください。</li>
+    <li><b>フォントを変更すると文字の印象が変わります。</b>C-1 は効果が大きい一方で見た目に影響するため、変更前後を比較のうえご判断いただきます。</li>
+    <li><b>スマートフォンの 90 点は相応の作業量が必要です。</b>設定を数か所 ON にするだけでは届きません。パソコン表示の 90 点は比較的容易です。</li>
+    <li><b>点数より、お問い合わせ導線が正常に動くことを優先します。</b>作業後は電話発信・LINE・フォーム送信を実機で必ず確認します。</li>
+    <li><b>検索順位に実際に影響するのは、実ユーザーの計測値です。</b>90 点というスコアは改善の指標であり、順位を直接保証するものではありません。</li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-head"><span class="sec-key mono">5</span><h2>想定作業量</h2></div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>工程</th><th>内容</th><th>想定工数</th></tr></thead>
+      <tbody>
+        <tr><td class="num">0</td><td>構成確認・現状計測</td><td class="num">1 時間</td></tr>
+        <tr><td class="num">A</td><td>サーバー設定</td><td class="num">1 時間</td></tr>
+        <tr><td class="num">B</td><td>画像の最適化</td><td class="num">4 〜 8 時間</td></tr>
+        <tr><td class="num">C</td><td>フォントの見直し</td><td class="num">1 〜 2 時間</td></tr>
+        <tr><td class="num">D</td><td>JavaScript の軽量化</td><td class="num">3 〜 6 時間</td></tr>
+        <tr><td class="num">E</td><td>CSS の軽量化</td><td class="num">3 〜 5 時間</td></tr>
+        <tr><td class="num">—</td><td>動作確認・再計測</td><td class="num">1 〜 2 時間</td></tr>
+        <tr><td class="num">計</td><td><b>モバイル 90 点以上を目標とする場合</b></td><td class="num"><b>14 〜 25 時間</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="legend" style="margin-top:12px">※ サイト構成の確認結果（0-1）により、対象範囲と工数が変わる場合があります。</p>
+</section>
+
+<footer>
+  本資料は、公開情報およびサーバー情報の調査にもとづく想定を含みます。実測値による確定版は、現状計測（0-2）の完了後にご提出します。
+</footer>
+
+</div>
