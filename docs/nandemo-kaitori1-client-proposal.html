@@ -177,8 +177,8 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
 <div class="callout">
   <h3>サイト構成の確認結果</h3>
   <p>ご確認の結果、<b>トップページは WordPress ではなく、直接作られた HTML ファイル</b>であることが確定しました。</p>
-  <p>このため、お持ちの高速化プラグイン <b>「WP Rocket」はトップページには効果がありません。</b>WP Rocket は WordPress が生成するページにのみ働く仕組みのためです。<b>トップページの点数は、下記 A〜E の方法で改善します。</b></p>
-  <p>なお WP Rocket は <span class="mono">/wp/</span> 配下のブログ記事には有効です（下記 F）。ライセンスが無駄になるわけではありませんが、<b>今回の目標である「トップページ 90 点」には関与しません。</b></p>
+  <p>高速化プラグイン「WP Rocket」は WordPress が生成するページにのみ働く仕組みのため、<b>静的 HTML のトップページには構造上そもそも適用できません。</b>あわせて、今回は WP Rocket 自体を使用しない方針で確定しています。</p>
+  <p><b>ご安心ください。下記 A〜E の施策は、いずれも有料プラグインを必要としません。</b>エックスサーバーの標準機能とサイト本体の改修のみで、目標である「トップページ 90 点」を目指せます。<b>追加のプラグイン費用は発生しません。</b></p>
 </div>
 
 <section>
@@ -216,7 +216,7 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
     <div class="group-title"><h3>0 ── 事前確認</h3><span class="group-tag">必須</span></div>
     <div class="m">
       <div class="m-code">0-1</div>
-      <div><div class="m-name">サイト構成の確認</div><p class="m-desc">トップページは静的 HTML であることを確認済みです。WP Rocket の対象外と確定しました。</p></div>
+      <div><div class="m-name">サイト構成の確認</div><p class="m-desc">トップページは静的 HTML であることを確認済みです。WordPress 用の高速化プラグインは適用対象外と確定しました。</p></div>
       <div class="m-meta"><span class="chip mid">完了</span></div>
     </div>
     <div class="m">
@@ -328,26 +328,21 @@ footer{margin:64px 0 0; padding:24px 0 0; border-top:1px solid var(--rule); font
 
   <div class="group">
     <div class="group-title"><h3>F ── WordPress 部分（/wp/ のブログ）</h3><span class="group-tag neutral">トップページ対象外</span></div>
-    <p class="group-note">この F の項目は <span class="mono">/wp/</span> 配下のブログ記事にのみ効きます。<b>今回の目標である「トップページ 90 点」には影響しません。</b>ブログを継続される場合の任意項目としてご検討ください。</p>
+    <p class="group-note">この F の項目は <span class="mono">/wp/</span> 配下のブログ記事にのみ効きます。<b>今回の目標である「トップページ 90 点」には影響しません。</b>ブログを継続される場合の任意項目としてご検討ください。<b>いずれも有料プラグインは不要です。</b></p>
     <div class="m">
       <div class="m-code">F-1</div>
-      <div><div class="m-name">WP Rocket の設定最適化</div><p class="m-desc">お持ちのプラグインを、ブログ記事に対して設定します。キャッシュ、未使用 CSS の削除、JavaScript の遅延実行などを 1 項目ずつ検証しながら有効化します。</p></div>
+      <div><div class="m-name">エックスサーバーの「サーバーキャッシュ設定」を有効化</div><p class="m-desc">サーバーの標準機能でブログ記事の表示を速くします。<b>プラグインの追加は不要で、費用もかかりません。</b></p></div>
       <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
     </div>
     <div class="m">
       <div class="m-code">F-2</div>
-      <div><div class="m-name">画像圧縮プラグインの導入</div><p class="m-desc"><b>WP Rocket には画像そのものを圧縮する機能はありません。</b>別途、圧縮用のプラグインを組み合わせる必要があります。</p></div>
+      <div><div class="m-name">画像圧縮プラグインの導入</div><p class="m-desc">記事内の画像を自動で圧縮します。無料のプラグインで対応可能です。</p></div>
       <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
     </div>
     <div class="m">
       <div class="m-code">F-3</div>
       <div><div class="m-name">不要プラグインの整理</div><p class="m-desc">使っていないプラグインが全ページに独自のファイルを読み込ませている場合があり、停止するだけで軽くなります。</p></div>
       <div class="m-meta"><span class="chip mid">効果 中</span><span class="chip">工数 小</span></div>
-    </div>
-    <div class="m">
-      <div class="m-code">F-4</div>
-      <div><div class="m-name">サーバー側キャッシュとの競合解消</div><p class="m-desc">エックスサーバーの「サーバーキャッシュ設定」と WP Rocket は機能が重複し、<b>両方 ON にすると更新が反映されない不具合が起きます。</b>片方を必ず無効化します。</p></div>
-      <div class="m-meta"><span class="chip">効果 —</span><span class="chip">工数 小</span><span class="chip">必須</span></div>
     </div>
   </div>
 
